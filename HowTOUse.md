@@ -1,10 +1,10 @@
-![1688035810144](image/Howtousereadme/1688035810144.png)
+d ![1688035810144](image/Howtousereadme/1688035810144.png)
 
-# WordReader
+### Text Frequency Analyzer Application
 
-The WordReader is a versatile application designed to analyze text files for word usage patterns. With this tool, users can calculate the frequency of specific words within a file and identify words that appear a significant number of times. Additionally, the application offers the functionality to pinpoint the most commonly used word in a file.
+The Text Frequency Analyzer Application is a versatile application designed to analyze text files for word usage patterns. With this tool, users can calculate the frequency of specific words within a file and identify words that appear a significant number of times. Additionally, the application offers the functionality to pinpoint the most commonly used word in a file.
 
-One of the invaluable utilities of the WordReader is its ability to facilitate literary analysis. By assessing word frequency, users can gain insights into the mood or themes that an author may have intended to convey. For example, the prevalence of words associated with sadness or joy can hint at the underlying tone of the text.
+One of the invaluable utilities of the Analyzer is its ability to facilitate literary analysis. By assessing word frequency, users can gain insights into the mood or themes that an author may have intended to convey. For example, the prevalence of words associated with sadness or joy can hint at the underlying tone of the text.
 
 In the development of this application, I employed object-oriented programming principles to ensure a modular and scalable codebase. Furthermore, I utilized data structures such as maps and sets, which are instrumental in efficiently managing and manipulating data. In addition to these programming constructs, the application's development involved navigating the SDL learning curve, which contributed to a more polished and effective product.
 
@@ -73,8 +73,8 @@ They analyze the results to understand the main themes and motifs of the play.
 
 Description:
 
-Researchers and academicians can use the WordReader application to analyze research articles or journals to identify trending keywords in their field of study. By understanding which terms are frequently used, they can stay abreast with the current themes and directions in research.
+Researchers and academicians can use the Text Frequency Analyzer application to analyze research articles or journals to identify trending keywords in their field of study. By understanding which terms are frequently used, they can stay abreast with the current themes and directions in research.
 
 Example:
 
-A data scientist utilizes the WordReader to analyze multiple research papers published in the last year on Artificial Intelligence. Through identifying the most frequently used terms, they can understand the latest technologies and approaches that are trending in the AI community.
+A data scientist utilizes the application to analyze multiple research papers published in the last year on Artificial Intelligence. Through identifying the most frequently used terms, they can understand the latest technologies and approaches that are trending in the AI community.
