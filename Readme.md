@@ -1,68 +1,52 @@
-Text Frequency Analyzer Application
-The Text Frequency Analyzer Application is a versatile application designed to analyze text files for word usage patterns. With this tool, users can calculate the frequency of specific words within a file and identify words that appear a significant number of times. Additionally, the application offers the functionality to pinpoint the most commonly used word in a file.
 
-One of the invaluable utilities of the Analyzer is its ability to facilitate literary analysis. By assessing word frequency, users can gain insights into the mood or themes that an author may have intended to convey. For example, the prevalence of words associated with sadness or joy can hint at the underlying tone of the text.
+# Text Frequency Analyzer Application
 
-In the development of this application, I employed object-oriented programming principles to ensure a modular and scalable codebase. Furthermore, I utilized data structures such as maps and sets, which are instrumental in efficiently managing and manipulating data. In addition to these programming constructs, the application's development involved navigating the SDL learning curve, which contributed to a more polished and effective product.
+## Overview:
 
-HOW TO USE
-To be able to use this program you would first need to build the porgram in your code editor.
-Make sure the e-book taht you want to analyze is saved in the same folder as the porgam in a txt file or in a plain text form (UTF-8)
-The application wouldprompt you to enter the name (with extension) of the text file you wish to analyze.
-The application would then ask you how the N number of requency that you want to see and also the words that appear that Nth amount of time , please input the number
-The application will read the file, clean the words (remove non-alphabetic characters), and compute the frequency of each word.
-After the analysis, you can query words by their frequency. For example, to find all words that occur twice:
-The application will display all words that occur with the frequency you entered.
-Analyzing a Fresh E-book
-To analyze a new e-book:
+The Text Frequency Analyzer Application is a powerful tool designed to scrutinize text files for patterns in word usage. With this tool, users can delve deep into a text's contents, identifying common words and those that stand out due to their repetition.
 
-Download the e-book in plain text form (UTF-8).
-Save the e-book to the same directory as the compiled WordFrequencyAnalyzer application.
-Run the WordFrequencyAnalyzer and enter the filename of the e-book when prompted.
-Query the word frequencies as desired.
-Note
-The application is not case sensitive , to avoid complications and mixup all the words have been turned into lowercase letters and also any word buffered by whitspace is considered a word . Non-alphabetic characters in wrods are removed during analysis.
+### Key Features:
 
-Use Cases
-Title: Analyzing Word Frequencies in a Book
-Primary Actor: User
+- **Frequency Calculation**: Determine the frequency of specific words within a file.
+- **Top Word Identification**: Pinpoint the most commonly used word in a file.
+- **Literary Analysis**: Gain insights into the predominant mood, theme, or tone by assessing word usage.
 
-Goal in Context: To analyze and understand how frequently each word occurs in a book.
+## Development Insights:
 
-Stakeholders: User
+In constructing this application, the principles of object-oriented programming were applied to ensure modularity and scalability. Key data structures like maps and sets were harnessed for efficient data handling. The development journey also included mastering SDL, enhancing the application's overall quality.
 
-Preconditions: The plain text file of the book is available.
+## Instructions for Use:
 
-Main Success Scenario:
+1. **Setup**: Compile the program in your code editor. Ensure the e-book or text you aim to analyze is saved in the program's directory in a `.txt` format or plain text (UTF-8).
+2. **Launch & Input**: Upon running, the application prompts for the text file's name (with extension). It will then request the 'N' frequency for word appearance.
+3. **Analysis**: The program reads and processes the file — cleaning words of non-alphabetic characters and tallying word occurrences.
+4. **Query**: Post-analysis, users can query words based on their frequency. The app displays all words occurring with the input frequency.
 
-User provides the path to the plain text file.
+### Note:
 
-The application reads the file, splitting it into its constituent words.
+The application is case agnostic. To streamline analysis, all words are converted to lowercase. Words delineated by whitespace are recognized, and non-alphabetic characters within words are stripped during the evaluation.
 
-The application cleans each word (e.g., converts to lowercase, removes punctuation).
+## Use Cases:
 
-The application stores these words in an associative data structure, keeping track of how frequently each word occurs.
+### 1. Analyzing Word Frequencies in a Book
 
-The application generates and displays a table showing the words by frequency.'
+- **Actor**: User
+- **Goal**: Discern the frequency of each word in a book.
+- **Preconditions**: The book's plain text file must be on hand.
+- **Steps**:
+  1. User provides the path to the plain text file.
+  2. Application processes the file — breaking it down into individual words.
+  3. Words are cleansed (e.g., lowercased, purged of punctuation).
+  4. Word frequencies are logged and displayed in a structured table.
 
-Analyzing Literary Works:
-Description: An author or literary analyst can use this application to analyze the vocabulary diversity in a book or collection of poems. By finding words that are used repeatedly,
+### 2. Analyzing Literary Works:
 
-they can evaluate the author’s style and word choice.
+- **Description**: Writers or analysts might employ the tool to dissect an author's vocabulary spread in books or poetic anthologies. Such insights can reveal the author's stylistic tendencies.
 
-Example: An English literature student uses the application to find
+  **Example**: A student, studying Shakespeare's "Romeo and Juliet" through the app, can discern primary motifs and themes by assessing frequently appearing words.
 
-the words that are used most frequently in Shakespeare's
+### 3. Identifying Trends in Research Articles:
 
-"Romeo and Juliet".
+- **Description**: Scholars and researchers can employ the Text Frequency Analyzer to glean insights from research papers, pinpointing popular keywords in their discipline.
 
-They analyze the results to understand the main themes and motifs of the play.
-
-Identifying Trends in Research Articles:
-Description:
-
-Researchers and academicians can use the Text Frequency Analyzer application to analyze research articles or journals to identify trending keywords in their field of study. By understanding which terms are frequently used, they can stay abreast with the current themes and directions in research.
-
-Example:
-
-A data scientist utilizes the application to analyze multiple research papers published in the last year on Artificial Intelligence. Through identifying the most frequently used terms, they can understand the latest technologies and approaches that are trending in the AI community.
+  **Example**: A data scientist uses the tool to parse several AI research articles from the past year. Recognizing recurring terms, they glean insights about emergent technologies and methodologies trending in AI circles.
