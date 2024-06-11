@@ -1,43 +1,90 @@
 # Text Frequency Analyzer Application
 
-## Overview:
-The Text Frequency Analyzer Application is a powerful tool designed to scrutinize text files for patterns in word usage. With this tool, users can delve deep into a text's contents, identifying common words and those that stand out due to their repetition. 
+## Overview
 
-### Key Features:
-- **Frequency Calculation**: Determine the frequency of specific words within a file.
-- **Top Word Identification**: Pinpoint the most commonly used word in a file.
-- **Literary Analysis**: Gain insights into the predominant mood, theme, or tone by assessing word usage.
+The Text Frequency Analyzer Application is a comprehensive tool designed to analyze text data. It provides insights into word usage patterns, offering detailed reports on frequency, sentiment, and exporting capabilities for further analysis.
 
-## Development Insights:
-In constructing this application, the principles of object-oriented programming were applied to ensure modularity and scalability. Key data structures like maps and sets were harnessed for efficient data handling. The development journey also included mastering SDL, enhancing the application's overall quality.
+## Key Features
 
-## Instructions for Use:
-1. **Setup**: Compile the program in your code editor. Ensure the e-book or text you aim to analyze is saved in the program's directory in a `.txt` format or plain text (UTF-8).
-2. **Launch & Input**: Upon running, the application prompts for the text file's name (with extension). It will then request the 'N' frequency for word appearance.
-3. **Analysis**: The program reads and processes the file — cleaning words of non-alphabetic characters and tallying word occurrences.
-4. **Query**: Post-analysis, users can query words based on their frequency. The app displays all words occurring with the input frequency.
+### Frequency Calculation
 
-### Note:
-The application is case agnostic. To streamline analysis, all words are converted to lowercase. Words delineated by whitespace are recognized, and non-alphabetic characters within words are stripped during the evaluation.
+* **Purpose** : Analyze and determine the frequency of each word within a given text file.
+* **How It Works** : The application scans the entire text, counts each occurrence of every word, and stores these counts. This feature is fundamental for understanding which words are most prevalent and may determine the focus of the text.
+* ![1718101862362](./image/1718101862362.png)
 
-## Use Cases:
+### Top Word Identification
 
-### 1. Analyzing Word Frequencies in a Book
-- **Actor**: User
-- **Goal**: Discern the frequency of each word in a book.
-- **Preconditions**: The book's plain text file must be on hand.
-- **Steps**:
-  1. User provides the path to the plain text file.
-  2. Application processes the file — breaking it down into individual words.
-  3. Words are cleansed (e.g., lowercased, purged of punctuation).
-  4. Word frequencies are logged and displayed in a structured table.
+* **Purpose** : Identify and report the most frequently appearing words in the text.
+* **How It Works** : After calculating word frequencies, the application sorts these frequencies to highlight the most common words. This is particularly useful for quickly identifying key themes or subjects within large volumes of text.
+* ![1718102178290](./image/1718102178290.png)
 
-### 2. Analyzing Literary Works:
-- **Description**: Writers or analysts might employ the tool to dissect an author's vocabulary spread in books or poetic anthologies. Such insights can reveal the author's stylistic tendencies.
-  
-  **Example**: A student, studying Shakespeare's "Romeo and Juliet" through the app, can discern primary motifs and themes by assessing frequently appearing words.
+### Sentiment Analysis
 
-### 3. Identifying Trends in Research Articles:
-- **Description**: Scholars and researchers can employ the Text Frequency Analyzer to glean insights from research papers, pinpointing popular keywords in their discipline.
-  
-  **Example**: A data scientist uses the tool to parse several AI research articles from the past year. Recognizing recurring terms, they glean insights about emergent technologies and methodologies trending in AI circles.
+* **Purpose** : Assess the emotional tone of the text, classifying it as positive, negative, or neutral based on the usage of predefined sentiment-laden words.
+* **How It Works** : Utilizes two lists of words known for their positive or negative connotations. The program counts occurrences of these words and calculates a sentiment score, which indicates the overall emotional bias of the text.
+
+  ![1718101746953](./image/1718101746953.png)
+
+### Data Export
+
+* **Purpose** : Allow users to export the analyzed data for use in other applications or for record-keeping.
+* **How It Works** : Users can choose to export the frequency data in three formats: CSV, JSON, or TXT. Each format serves different needs, such as statistical analysis in spreadsheets (CSV), data interchange between applications (JSON), or simple text records (TXT)
+* .![1718102329690](./image/1718102329690.png)
+* ![1718101609071](./image/1718101609071.png)![1718101661313](./image/1718101661313.png)![1718101711176](./image/1718101711176.png)
+
+## Goals
+
+* **Enhance Textual Understanding** : Help users gain deeper insights into their textual content, whether for academic, professional, or personal purposes.
+* **Support Data Analysis** : Provide robust data export options that support further analysis in tools like Excel, R, or Python.
+* **User-Friendly Interface** : Maintain a simple, menu-driven interface that can be easily navigated by users of all technical levels.
+
+## Instructions for Use
+
+### Setup
+
+Compile the program using a C++ compiler, ensuring all dependencies like the JSON library are correctly configured.
+
+### Launch & Input
+
+Run the program and follow the prompts to load and analyze your text file.
+
+### Menu-Driven Interface
+
+Navigate through the application using the numbered menu to access different functionalities:
+
+* **1. Load and Analyze Text File** : Crucial first step for all further analyses.
+* **2. Export Frequency Table** : Choose from CSV, JSON, or TXT formats.
+* **3. Show Word Frequencies** : Displays frequencies up to a user-specified limit.
+* **4. Query Specific Frequency** : Look up how often certain frequencies occur.
+* **5. Perform Sentiment Analysis** : Analyze the emotional tone of the text.
+* **6. Search for Word Occurrences** : Find the frequency of specific words.
+* **7. Exit** : Safely exit the application.
+
+![1718101568427](./image/1718101568427.png)
+
+## Use Cases
+
+### Analyzing Academic Texts
+
+* **Scenario** : A researcher analyzing the frequency of technical terms in scientific articles to study trends.
+* **Process** : Load the article, analyze it, and export the data to CSV for further trend analysis.
+
+### Literary Analysis
+
+* **Scenario** : A literature student examines the use of certain themes or words in a novel.
+* **Process** : After analyzing the text, the student uses the sentiment analysis feature to understand the emotional undertone of different chapters.
+
+### Content Strategy Development
+
+* **Scenario** : A content marketer evaluates commonly used words in successful blog posts.
+* **Process** : The marketer analyzes several posts, compares word frequencies, and identifies potential keywords for SEO.
+
+## Future Additions
+
+* **Advanced Sentiment Analysis** : Implement machine learning models to enhance sentiment analysis accuracy.
+* **Language Support** : Extend the application to support multiple languages, accommodating a broader user base.
+* **Graphical User Interface (GUI)** : Develop a GUI to make the application more accessible to non-technical users.
+
+## Conclusion
+
+The Text Frequency Analyzer Application is built to provide detailed insights into text files, aiding users in understanding and utilizing their textual data effectively. By maintaining a focus on user-friendliness and functionality, it serves as a valuable tool for a wide array of textual analysis tasks.
