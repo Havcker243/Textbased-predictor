@@ -6,51 +6,68 @@
 #include <map>
 #include <set>
 
+// Class WordReader is designed for analyzing text files to determine the frequency of word occurrences
+// and providing various outputs based on these frequencies. It also performs sentiment analysis.
 class WordReader
 {
 public:
-    // Here it reads the file with the given filename , cleans the words in the filename
-    // it then stors them along with thier frequencoes in a wordFrequency map
+    // readFile: Opens and processes the specified text file, extracting words and calculating their frequencies.
+    // It uses cleanWord to standardize words before counting.
     bool readFile(const std::string &filename);
 
-    // This generates a frequency table that maps each frequency to set of words (The words have to have appared the amount of times in the frequency )
+    // generateFrequencyTable: Creates a table mapping each frequency to the set of words that appear that many times.
+    // This facilitates efficient retrieval of words based on their frequency.
     void generateFrequencyTable();
 
-    // Returns a set of words that have appeared the number of times (frequency ) and if no words have the
-    // given frequency an enpty set would be released
+    // getWordsByFrequency: Returns a set of words that appear with the specified frequency.
+    // If no words are found for the given frequency, it returns an empty set.
     std::set<std::string> getWordsByFrequency(int frequency) const;
 
-    // These functions are to try and return the values and the results into a csv file, txt file or json file for student to be able to use
+    // exportFrequencyTableToCSV: Exports the frequency table to a CSV file.
+    // Useful for analysis in spreadsheet software.
     void exportFrequencyTableToCSV(const std::string &filename);
 
+    // exportFrequencyTableToJson: Exports the frequency data to a JSON file, suitable for web applications
+    // or data interchange with other applications.
     void exportFrequencyTableToJson(const std::string &filename);
+
+    // searchWordOccurrences: Allows the user to search for the frequency of specific words interactively.
+    // Continues until 'exit' is entered.
     void searchWordOccurrences();
+
+    // queryFrequency: Interactive function that displays all words that occur with a specified frequency.
     void queryFrequency();
+
+    // showAllFrequencies: Prompts the user for a maximum frequency and displays all frequencies up to that number.
     void showAllFrequencies();
+
+    // handleExportOptions: Manages user choices for exporting data, allowing selection of the format.
     void handleExportOptions();
 
+    // exportFrequencyTableToTxt: Exports the frequency table to a plain text file, listing frequencies and corresponding words.
     void exportFrequencyTableToTxt(const std::string &filename);
+
+    // calculateSentiment: Calculates a sentiment score based on the frequency of words in positiveWords and negativeWords sets.
     int calculateSentiment(const std::set<std::string> &positiveWords, const std::set<std::string> &negativeWords);
 
+    // loadWordsFromFile: Loads words from a specified file into a given set. Mainly used to load positive and negative words.
     void loadWordsFromFile(const std::string &filename, std::set<std::string> &wordSet);
 
-    // This is used to checks if this is an alphabet
+    // isAlpha: Utility function to check if a character is an alphabetic letter.
     bool isAlpha(char ch) const;
 
-    // This is used to clean out the input word by removing non-word characters
-    // and changing it to lowercase
+    // cleanWord: Standardizes input words by converting to lowercase and removing non-alphabetic characters.
     std::string cleanWord(const std::string &word) const;
 
-    // So if we want to get the number of times the word comes up in a word we would use this function
+    // getfrequencyofword: Retrieves the frequency of a specific word from the wordFrequency map.
     int getfrequencyofword(const std::string &word) const;
 
 private:
-    // A map to store the frequency of each word. The key is the word and
-    // the value is its frequency.
+    // wordFrequency: Stores each word's frequency count using a map where the key is the word and the value is its frequency.
     std::unordered_map<std::string, int> wordFrequency;
 
-    // A map to store sets of words for each frequency. The key is the frequency
-    // and the value is a set of words having that frequency.
+    // frequencyTable: Organizes words into sets based on their frequency of appearance.
+    // Facilitates easy access to words by their frequency.
     std::map<int, std::set<std::string>> frequencyTable;
 };
 

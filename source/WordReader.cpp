@@ -10,30 +10,8 @@
 #include <algorithm> // For max_element
 #include <iterator>  // For back_inserter
 
-/*Pseudocode*/
-/*function readFile(filename) returns boolean:
-    // Attempt to open the file
-    open file with given filename
-    // Check if file is opened successfully
-    if file is not open then
-        display "Error: Could not open file"
-        return false
-    end if
-
-    // Iterate through each word in the file
-    for each word in file
-        // Clean the word and increment its frequency in wordFrequency
-        word = cleanWord(word)
-        increment wordFrequency[word]
-    end for
-
-    // Return true to indicate success
-    return true
-end function
-*/
-
-// This function is used to open and read through the file
-// it also add noth it words and the amount of words into a map
+// readFile: Opens and reads the content of a text file, storing the frequency of each word.
+//  This function is crucial as it populates the wordFrequency map, which is the foundation for all other analyses.
 bool WordReader::readFile(const std::string &filename)
 {
     // Attempt to open the file
@@ -57,15 +35,8 @@ bool WordReader::readFile(const std::string &filename)
     return true;
 }
 
-/*Pseudocode*/
-/*function generateFrequencyTable():
-    // Iterate through each word and its frequency in wordFrequency
-    for each pair (word, freq) in wordFrequency
-        // Insert the word into the set associated with its frequency in frequencyTable
-        insert word into frequencyTable[freq]
-    end for
-end function
-*/
+// generateFrequencyTable: Processes the wordFrequency map to organize words into sets grouped by their frequency.
+// This allows for quick retrieval of all words that appear with the same frequency, aiding in analysis and reporting.
 void WordReader::generateFrequencyTable()
 {
     // loop through it element in the wordFrequency map
@@ -83,6 +54,8 @@ void WordReader::generateFrequencyTable()
     }
 }
 
+// calculateSentiment: Calculates a sentiment score based on the frequencies of positive and negative words.
+// This function helps in determining the overall emotional tone of the text.
 int WordReader::calculateSentiment(const std::set<std::string> &positiveWords, const std::set<std::string> &negativeWords)
 {
     int sentimentScore = 0;
@@ -102,6 +75,8 @@ int WordReader::calculateSentiment(const std::set<std::string> &positiveWords, c
     return sentimentScore;
 }
 
+// loadWordsFromFile: Loads words from a specified file into a set. This is used primarily to load positive and negative words for sentiment analysis.
+// It ensures all words are in lowercase to maintain case insensitivity.
 void WordReader::loadWordsFromFile(const std::string &filename, std::set<std::string> &wordSet)
 {
     std::ifstream file(filename);
@@ -124,6 +99,8 @@ void WordReader::loadWordsFromFile(const std::string &filename, std::set<std::st
     file.close();
 }
 
+// exportFrequencyTableToJson: Exports the frequency table to a JSON file.
+// This method is particularly useful for users who need to process or visualize the data in applications that accept JSON format.
 void WordReader::exportFrequencyTableToJson(const std::string &filename)
 {
     nlohmann::json jsonOutput;
@@ -158,6 +135,8 @@ void WordReader::exportFrequencyTableToJson(const std::string &filename)
     std::cout << "Data exported to " << filename << ".json" << std::endl;
 }
 
+// exportFrequencyTableToTxt: Exports the frequency table to a plain text file, listing each frequency and the corresponding words.
+// This is useful for users who prefer a simple textual representation of the data.
 void WordReader::exportFrequencyTableToTxt(const std::string &filename)
 {
     std::ofstream outFile(filename);
@@ -180,8 +159,8 @@ void WordReader::exportFrequencyTableToTxt(const std::string &filename)
     outFile.close();
 }
 
-// Function to export the frequency table to a specified file.
-// This function takes a filename as a parameter and writes the frequency data to this file.
+// exportFrequencyTableToCSV: Exports the frequency data to a CSV file, which is useful for further analysis in spreadsheet applications like Microsoft Excel.
+// This method organizes the data into columns corresponding to each frequency, facilitating easy analysis of word occurrence patterns.
 void WordReader::exportFrequencyTableToCSV(const std::string &filename)
 {
     std::ofstream outFile(filename);
@@ -260,16 +239,6 @@ std::set<std::string> WordReader::getWordsByFrequency(int frequency) const
     return std::set<std::string>();
 }
 
-/*Pseudocode*/
-/*function getWordsByFrequency(frequency) returns set of strings
-    iterator = frequencyTable.find(frequency)
-    if iterator is not at the end of frequencyTable then
-        return iterator's second element (set of words)
-    end if
-    return an empty set of strings
-end function
-*/
-
 // The cleanword function is used to clean out the words/string or in somple words to remove
 // the presence of white spaces or special characters in our word search
 // we would first collect the word or string from the document
@@ -289,59 +258,43 @@ std::string WordReader::cleanWord(const std::string &word) const
     }
     return cleanedWord;
 }
-/*pseudocode*/
-/*function cleanWord(word) returns string
-    declare cleanedWord as empty string
-        for each character in word do
-        if isAlpha(character) then
-            cleanedWord = cleanedWord + toLowercase(character)
-        end if
-    end for
-        return cleanedWord
-end function
-*/
-
-// This function is used to in coinjuction with the cleanword function
-// This is used to check if the world is a capital or lower case
+// isAlpha: Checks if the given character 'ch' is an alphabetic character, either uppercase or lowercase.
+// This function is essential for the text cleaning process, ensuring that only alphabetic characters are considered in the analysis.
+// It is used extensively by the cleanWord function to validate each character of a word.
 bool WordReader::isAlpha(char ch) const
 {
-    return std::isupper(ch) || std::islower(ch);
+    return std::isupper(ch) || std::islower(ch); // Checks if the character is either uppercase or lowercase.
 }
-/*Pseudocode*/
-/*
-function isAlpha(character) returns boolean
-    if character is uppercase or character is lowercase then
-        return true
-    end if
-        return false
-end function
-*/
 
-// The function uses an iterator to point to the location
-// of the word in the unordered map ic word in the unordered map
+// getfrequencyofword: Retrieves the frequency of a specific word from the wordFrequency map.
+// This function is critical for various features where understanding the occurrence of a particular word is needed, such as during queries or detailed analysis.
+// It utilizes a map iterator to find the word in the wordFrequency map and returns its associated frequency.
 int WordReader::getfrequencyofword(const std::string &word) const
 {
-    // use an iterator to point to the word
-    auto it = wordFrequency.find(word);
+    auto it = wordFrequency.find(word); // Attempts to find the word in the map.
     if (it != wordFrequency.end())
     {
-        return it->second;
+        return it->second; // If found, returns the frequency of the word.
     }
-    return 0;
+    return 0; // Returns 0 if the word is not found, indicating no occurrences.
 }
 
+// searchWordOccurrences: Provides an interactive way for users to search for the frequency of specific words.
+// This function prompts the user to enter words and displays how many times each entered word appears in the text.
 void WordReader::searchWordOccurrences()
 {
     std::string searchWord;
     std::cout << "Enter a word to search for its frequency (or 'exit' to finish): ";
     while (std::cin >> searchWord && searchWord != "exit")
-    {
-        int freq = getfrequencyofword(searchWord);
-        std::cout << "The word '" << searchWord << "' occurs " << freq << " times.\n";
-        std::cout << "Enter another word to search for (or 'exit' to exit): ";
+    {                                                                                  // Continues to prompt for words until the user types 'exit'.
+        int freq = getfrequencyofword(searchWord);                                     // Retrieves the frequency of the entered word.
+        std::cout << "The word '" << searchWord << "' occurs " << freq << " times.\n"; // Displays the frequency.
+        std::cout << "Enter another word to search for (or 'exit' to exit): ";         // Prompts for another word or to exit.
     }
 }
 
+// queryFrequency: Prompts the user to enter a frequency and displays all words that occur with that frequency.
+// It allows repeated queries until the user decides to exit by entering -1.
 void WordReader::queryFrequency()
 {
     std::cout << "Enter a frequency to find words or -1 to exit: ";
@@ -350,25 +303,27 @@ void WordReader::queryFrequency()
 
     while (frequency != -1)
     {
-        auto words = getWordsByFrequency(frequency);
+        auto words = getWordsByFrequency(frequency); // Retrieves the set of words that match the entered frequency.
         if (!words.empty())
         {
             std::cout << "Words that occur " << frequency << " times:\n";
             for (const auto &word : words)
             {
-                std::cout << word << " ";
+                std::cout << word << " "; // Display each word on the same line.
             }
             std::cout << "\n";
         }
         else
         {
-            std::cout << "No words found for this frequency.\n";
+            std::cout << "No words found for this frequency.\n"; // Informs the user if no words are found at the specified frequency.
         }
-        std::cout << "Enter another frequency or -1 to exit: ";
+        std::cout << "Enter another frequency or -1 to exit: "; // Allows the user to continuously query different frequencies.
         std::cin >> frequency;
     }
 }
 
+// showAllFrequencies: Allows the user to specify a maximum frequency and then displays all words up to that frequency.
+// This function is useful for analyzing the spread and commonality of word usage within the text.
 void WordReader::showAllFrequencies()
 {
     std::cout << "Enter the maximum frequency to display or -1 to exit: ";
@@ -379,13 +334,13 @@ void WordReader::showAllFrequencies()
     {
         for (int i = 1; i <= maxFrequency; ++i)
         {
-            auto words = getWordsByFrequency(i);
+            auto words = getWordsByFrequency(i); // Retrieves words for each frequency from 1 to maxFrequency.
             if (!words.empty())
             {
                 std::cout << "Words that occur " << i << " times:\n";
                 for (const auto &word : words)
                 {
-                    std::cout << word << " ";
+                    std::cout << word << " "; // Lists all words at the current frequency.
                 }
                 std::cout << "\n";
             }
@@ -393,6 +348,8 @@ void WordReader::showAllFrequencies()
     }
 }
 
+// handleExportOptions: Provides a user interface for exporting the frequency table in various formats.
+// It guides the user through selecting the file format and entering a filename, enhancing user interaction.
 void WordReader::handleExportOptions()
 {
     std::cout << "Choose the number to represent the format to export :\n";
@@ -411,18 +368,18 @@ void WordReader::handleExportOptions()
     switch (formatChoice)
     {
     case 1:
-        exportFrequencyTableToCSV(exportFilename + ".csv");
+        exportFrequencyTableToCSV(exportFilename + ".csv"); // Exports to CSV.
         std::cout << "Data exported to " << exportFilename << ".csv successfully.\n";
         break;
     case 2:
-        exportFrequencyTableToJson(exportFilename + ".json");
+        exportFrequencyTableToJson(exportFilename + ".json"); // Exports to JSON.
         std::cout << "Data exported to " << exportFilename << ".json successfully.\n";
         break;
     case 3:
-        exportFrequencyTableToTxt(exportFilename + ".txt");
+        exportFrequencyTableToTxt(exportFilename + ".txt"); // Exports to TXT.
         std::cout << "Data exported to " << exportFilename << ".txt successfully.\n";
         break;
     default:
-        std::cout << "Invalid option. No export performed.\n";
+        std::cout << "Invalid option. No export performed.\n"; // Handles user input errors.
     }
 }
