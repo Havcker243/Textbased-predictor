@@ -20,6 +20,14 @@ public:
     // given frequency an enpty set would be released
     std::set<std::string> getWordsByFrequency(int frequency) const;
 
+    // These functions are to try and return the values and the results into a csv file, txt file or json file for student to be able to use
+    void exportFrequencyTableToCSV(const std::string &filename);
+
+    void exportFrequencyTableToJson(const std::string &filename);
+
+    void exportFrequencyTableToTxt(const std::string &filename);
+    
+
     // This is used to checks if this is an alphabet
     bool isAlpha(char ch) const;
 

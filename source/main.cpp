@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
-
+#include <fstream>
+#include <../nlohmann/json.hpp>
 #include "WordReader.h"
 
 int main()
@@ -22,59 +23,86 @@ int main()
     // Here we generate the frequency table
     wordReader.generateFrequencyTable();
 
-    int number;
-    // We asked the user to input a number, whcih would serve as the maxiumman range for the amount of frequency that would
-    // be printed out
-    std ::cout << " Please choose the frequency of words that you want to see " << std::endl;
-    std::cin >> number;
+    // Ask if the user wants to export the frequency data and in which format
+    std::cout << "Do you want to export the frequency table? Enter 'CSV' for CSV file, 'JSON' for JSON file, 'TXT' for text file, or 'NO' to skip: ";
+    std::string exportChoice;
+    std::cin >> exportChoice;
 
-    // Here we try to print out all the words that appear at a certain frequancy
-    // I wanted to see if I can print it out in a literal table but I do not know if it is possible especially
-    // with the large amount of words espeically when going through a book
-    // Step 3: Display table of word frequencies
-    for (int i = 1; i <= number; ++i)
+    if (exportChoice == "CSV" || exportChoice == "JSON" || exportChoice == "TXT")
     {
-        // Here we take the set which would be returned by the object function
-        std::set<std::string> words = wordReader.getWordsByFrequency(i);
-        std::cout << "Words that occur " << i << " times:\n";
-        // We use a for loop and an iterator to go through the set and print out all the words
-        for (auto it = words.begin(); it != words.end(); ++it)
+        std::cout << "Enter the filename for the export (without extension): ";
+        std::string exportFilename;
+        std::cin >> exportFilename;
+
+        if (exportChoice == "CSV")
         {
-            std::cout << *it << " ";
+            wordReader.exportFrequencyTableToCSV(exportFilename + ".csv");
         }
-        std::cout << "\n\n";
+        else if (exportChoice == "JSON")
+        {
+            wordReader.exportFrequencyTableToJson(exportFilename + ".json");
+        }
+        else if (exportChoice == "TXT")
+        {
+            wordReader.exportFrequencyTableToTxt(exportFilename + ".txt");
+        }
+    }
+
+    // Step 3: Display table of word frequencies
+    std::cout << "Please enter the a number, this number would serve as the top requency, this means that we would show you all the words that appear from at a frewqucny of 1 to the frequncy  of the amount chosen (or -1 to exit): ";
+    int maxFrequency;
+    std::cin >> maxFrequency;
+    if (maxFrequency != -1)
+    {
+        for (int i = 1; i <= maxFrequency; ++i)
+        {
+            std::set<std::string> words = wordReader.getWordsByFrequency(i);
+            if (!words.empty())
+            {
+                std::cout << "Words that occur " << i << " times:\n";
+                for (const auto &word : words)
+                {
+                    std::cout << word << " ";
+                }
+                std::cout << "\n\n";
+            }
+        }
     }
 
     // Step 4: Query words by frequency
     // Here we give the user the opportunity to know the words that
     // appear at a certain frequency , the user would be asked to input a number and
     // the words that appeared that number of times would be printed out
-    int frequency;
+    // Query specific frequency
     std::cout << "Enter a frequency to find words (or -1 to exit): ";
-    while (std::cin >> frequency && frequency != -1)
+    int queryFrequency;
+    while (std::cin >> queryFrequency && queryFrequency != -1)
     {
-        // Transfer the set wigth a specific frequency
-        std::set<std::string> words = wordReader.getWordsByFrequency(frequency);
-        // Print out the frequancy  or the amount of times that this words come out
-        std::cout << "Words that occur " << frequency << " times:\n";
-        for (auto it = words.begin(); it != words.end(); ++it)
+        std::set<std::string> words = wordReader.getWordsByFrequency(queryFrequency);
+        if (!words.empty())
         {
-            std::cout << *it << " ";
+            std::cout << "Words that occur " << queryFrequency << " times:\n";
+            for (const auto &word : words)
+            {
+                std::cout << word << " ";
+            }
+            std::cout << "\n";
         }
-        std::cout << "\n\n";
+        else
+        {
+            std::cout << "No words found for this frequency.\n";
+        }
         std::cout << "Enter another frequency (or -1 to exit): ";
     }
 
-    std::cout << "Hey now you can check the number of times a word is found in the book, but do not forget this program is not case senstive " << std::endl;
-    std::cout << "So please type in all your words in lower case letters " << std ::endl;
-    // Here we ask the user to input words to look up in the book to get the number of times they appear in the book as whole
+    // Step 5: Search for word occurrences
+    std::cout << "Enter a word to search for its frequency (or 'exit' to finish): ";
     std::string searchWord;
-    std::cout << "Enter a word to search for (or type 'exit' to exit): ";
     while (std::cin >> searchWord && searchWord != "exit")
     {
-        int frequency = wordReader.getfrequencyofword(searchWord);
-        std::cout << "The word '" << searchWord << "' occurs " << frequency << " times.\n";
-        std::cout << "Enter another word to search for (or type 'exit' to exit): ";
+        int wordFrequency = wordReader.getfrequencyofword(searchWord);
+        std::cout << "The word '" << searchWord << "' occurs " << wordFrequency << " times.\n";
+        std::cout << "Enter another word to search for (or 'exit' to exit): ";
     }
 
     return 0;
