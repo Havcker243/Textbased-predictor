@@ -2,7 +2,10 @@
 #include <fstream>
 #include <iostream>
 #include <cctype>
+#include <vector>
 #include <iomanip>
+#include <algorithm> // For max_element
+#include <iterator>  // For back_inserter
 
 /*Pseudocode*/
 /*function readFile(filename) returns boolean:
@@ -75,6 +78,60 @@ void WordReader::generateFrequencyTable()
         // The frequncy table is a map where keys are frequancies and values are sets of words
         frequencyTable[freq].insert(word);
     }
+}
+
+// Function to export the frequency table to a specified file.
+// This function takes a filename as a parameter and writes the frequency data to this file.
+void WordReader::exportFrequencyTableToCSV(const std::string &filename) {
+    std::ofstream outFile(filename);
+    if (!outFile.is_open()) {
+        std::cerr << "Failed to create the CSV file." << std::endl;
+        return;
+    }
+
+    // Finding the maximum frequency to determine the number of columns
+    int maxFrequency = 0;
+    if (!frequencyTable.empty()) {
+        auto lastItem = frequencyTable.rbegin(); // Last item in the map
+        maxFrequency = lastItem->first;
+    }
+
+    // Write frequency headers
+    for (int i = 1; i <= maxFrequency; ++i) {
+        outFile << "Appeared " << i << " times,";
+    }
+    outFile << "\n";
+
+    // Prepare to fill the columns: vector of vectors to store columns
+    std::vector<std::vector<std::string>> columns(maxFrequency);
+
+    // Distribute words into columns based on their frequency
+    for (const auto &pair : frequencyTable) {
+        int index = pair.first - 1; // Frequency of 1 goes to index 0
+        std::copy(pair.second.begin(), pair.second.end(), std::back_inserter(columns[index]));
+    }
+
+    // Determine the maximum number of rows needed by finding the longest column
+    size_t maxRows = 0;
+    for (const auto &col : columns) {
+        if (col.size() > maxRows) {
+            maxRows = col.size();
+        }
+    }
+
+    // Write rows
+    for (size_t i = 0; i < maxRows; ++i) {
+        for (int j = 0; j < maxFrequency; ++j) {
+            if (i < columns[j].size()) {
+                outFile << columns[j][i];
+            }
+            outFile << ",";
+        }
+        outFile << "\n";
+    }
+
+    outFile.close();
+    std::cout << "Data exported to " << filename << ".csv" << std::endl;
 }
 
 // In this function I used the frequencyTable ( a map which using takes in both a set and a string)
@@ -150,11 +207,11 @@ function isAlpha(character) returns boolean
 end function
 */
 
-// The function uses an iterator to point to the location 
-// of the word in the unordered map ic word in the unordered map 
+// The function uses an iterator to point to the location
+// of the word in the unordered map ic word in the unordered map
 int WordReader::getfrequencyofword(const std::string &word) const
 {
-    //use an iterator to point to the word 
+    // use an iterator to point to the word
     auto it = wordFrequency.find(word);
     if (it != wordFrequency.end())
     {
