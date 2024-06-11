@@ -1,10 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-<<<<<<< HEAD
 #include <../nlohmann/json.hpp>
-=======
->>>>>>> 3bcfb1ee762c5fce3b4bf21a291619e33e940231
 #include "WordReader.h"
 
 int main()
