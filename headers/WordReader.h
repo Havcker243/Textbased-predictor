@@ -24,9 +24,15 @@ public:
     void exportFrequencyTableToCSV(const std::string &filename);
 
     void exportFrequencyTableToJson(const std::string &filename);
+    void searchWordOccurrences();
+    void queryFrequency();
+    void showAllFrequencies();
+    void handleExportOptions();
 
     void exportFrequencyTableToTxt(const std::string &filename);
-    
+    int calculateSentiment(const std::set<std::string> &positiveWords, const std::set<std::string> &negativeWords);
+
+    void loadWordsFromFile(const std::string &filename, std::set<std::string> &wordSet);
 
     // This is used to checks if this is an alphabet
     bool isAlpha(char ch) const;

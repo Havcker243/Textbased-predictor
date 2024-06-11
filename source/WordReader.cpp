@@ -4,6 +4,8 @@
 #include <cctype>
 #include <../nlohmann/json.hpp>
 #include <vector>
+#include <set>
+#include <string>
 #include <iomanip>
 #include <algorithm> // For max_element
 #include <iterator>  // For back_inserter
@@ -79,6 +81,47 @@ void WordReader::generateFrequencyTable()
         // The frequncy table is a map where keys are frequancies and values are sets of words
         frequencyTable[freq].insert(word);
     }
+}
+
+int WordReader::calculateSentiment(const std::set<std::string> &positiveWords, const std::set<std::string> &negativeWords)
+{
+    int sentimentScore = 0;
+
+    for (const auto &word : wordFrequency)
+    {
+        if (positiveWords.find(word.first) != positiveWords.end())
+        {
+            sentimentScore += word.second; // Increment score by frequency of positive word
+        }
+        if (negativeWords.find(word.first) != negativeWords.end())
+        {
+            sentimentScore -= word.second; // Decrement score by frequency of negative word
+        }
+    }
+
+    return sentimentScore;
+}
+
+void WordReader::loadWordsFromFile(const std::string &filename, std::set<std::string> &wordSet)
+{
+    std::ifstream file(filename);
+    if (!file.is_open())
+    {
+        std::cerr << "Failed to open " << filename << std::endl;
+        return;
+    }
+
+    std::string word;
+    while (getline(file, word))
+    {
+        // Convert word to lowercase before inserting into the set
+        std::transform(word.begin(), word.end(), word.begin(),
+                       [](unsigned char c)
+                       { return std::tolower(c); });
+        wordSet.insert(word);
+    }
+
+    file.close();
 }
 
 void WordReader::exportFrequencyTableToJson(const std::string &filename)
@@ -285,4 +328,101 @@ int WordReader::getfrequencyofword(const std::string &word) const
         return it->second;
     }
     return 0;
+}
+
+void WordReader::searchWordOccurrences()
+{
+    std::string searchWord;
+    std::cout << "Enter a word to search for its frequency (or 'exit' to finish): ";
+    while (std::cin >> searchWord && searchWord != "exit")
+    {
+        int freq = getfrequencyofword(searchWord);
+        std::cout << "The word '" << searchWord << "' occurs " << freq << " times.\n";
+        std::cout << "Enter another word to search for (or 'exit' to exit): ";
+    }
+}
+
+void WordReader::queryFrequency()
+{
+    std::cout << "Enter a frequency to find words or -1 to exit: ";
+    int frequency;
+    std::cin >> frequency;
+
+    while (frequency != -1)
+    {
+        auto words = getWordsByFrequency(frequency);
+        if (!words.empty())
+        {
+            std::cout << "Words that occur " << frequency << " times:\n";
+            for (const auto &word : words)
+            {
+                std::cout << word << " ";
+            }
+            std::cout << "\n";
+        }
+        else
+        {
+            std::cout << "No words found for this frequency.\n";
+        }
+        std::cout << "Enter another frequency or -1 to exit: ";
+        std::cin >> frequency;
+    }
+}
+
+void WordReader::showAllFrequencies()
+{
+    std::cout << "Enter the maximum frequency to display or -1 to exit: ";
+    int maxFrequency;
+    std::cin >> maxFrequency;
+
+    if (maxFrequency != -1)
+    {
+        for (int i = 1; i <= maxFrequency; ++i)
+        {
+            auto words = getWordsByFrequency(i);
+            if (!words.empty())
+            {
+                std::cout << "Words that occur " << i << " times:\n";
+                for (const auto &word : words)
+                {
+                    std::cout << word << " ";
+                }
+                std::cout << "\n";
+            }
+        }
+    }
+}
+
+void WordReader::handleExportOptions()
+{
+    std::cout << "Choose the number to represent the format to export :\n";
+    std::cout << "1. CSV\n";
+    std::cout << "2. JSON\n";
+    std::cout << "3. TXT\n";
+    std::cout << "Enter choice: ";
+
+    int formatChoice;
+    std::cin >> formatChoice;
+
+    std::cout << "Enter the filename for the export (without extension): ";
+    std::string exportFilename;
+    std::cin >> exportFilename;
+
+    switch (formatChoice)
+    {
+    case 1:
+        exportFrequencyTableToCSV(exportFilename + ".csv");
+        std::cout << "Data exported to " << exportFilename << ".csv successfully.\n";
+        break;
+    case 2:
+        exportFrequencyTableToJson(exportFilename + ".json");
+        std::cout << "Data exported to " << exportFilename << ".json successfully.\n";
+        break;
+    case 3:
+        exportFrequencyTableToTxt(exportFilename + ".txt");
+        std::cout << "Data exported to " << exportFilename << ".txt successfully.\n";
+        break;
+    default:
+        std::cout << "Invalid option. No export performed.\n";
+    }
 }
