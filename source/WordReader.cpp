@@ -2,7 +2,10 @@
 #include <fstream>
 #include <iostream>
 #include <cctype>
+<<<<<<< HEAD
 #include <../nlohmann/json.hpp>
+=======
+>>>>>>> 3bcfb1ee762c5fce3b4bf21a291619e33e940231
 #include <vector>
 #include <iomanip>
 #include <algorithm> // For max_element
@@ -81,6 +84,7 @@ void WordReader::generateFrequencyTable()
     }
 }
 
+<<<<<<< HEAD
 void WordReader::exportFrequencyTableToJson(const std::string &filename)
 {
     nlohmann::json jsonOutput;
@@ -144,21 +148,36 @@ void WordReader::exportFrequencyTableToCSV(const std::string &filename)
     std::ofstream outFile(filename);
     if (!outFile.is_open())
     {
+=======
+// Function to export the frequency table to a specified file.
+// This function takes a filename as a parameter and writes the frequency data to this file.
+void WordReader::exportFrequencyTableToCSV(const std::string &filename) {
+    std::ofstream outFile(filename);
+    if (!outFile.is_open()) {
+>>>>>>> 3bcfb1ee762c5fce3b4bf21a291619e33e940231
         std::cerr << "Failed to create the CSV file." << std::endl;
         return;
     }
 
     // Finding the maximum frequency to determine the number of columns
     int maxFrequency = 0;
+<<<<<<< HEAD
     if (!frequencyTable.empty())
     {
+=======
+    if (!frequencyTable.empty()) {
+>>>>>>> 3bcfb1ee762c5fce3b4bf21a291619e33e940231
         auto lastItem = frequencyTable.rbegin(); // Last item in the map
         maxFrequency = lastItem->first;
     }
 
     // Write frequency headers
+<<<<<<< HEAD
     for (int i = 1; i <= maxFrequency; ++i)
     {
+=======
+    for (int i = 1; i <= maxFrequency; ++i) {
+>>>>>>> 3bcfb1ee762c5fce3b4bf21a291619e33e940231
         outFile << "Appeared " << i << " times,";
     }
     outFile << "\n";
@@ -167,8 +186,12 @@ void WordReader::exportFrequencyTableToCSV(const std::string &filename)
     std::vector<std::vector<std::string>> columns(maxFrequency);
 
     // Distribute words into columns based on their frequency
+<<<<<<< HEAD
     for (const auto &pair : frequencyTable)
     {
+=======
+    for (const auto &pair : frequencyTable) {
+>>>>>>> 3bcfb1ee762c5fce3b4bf21a291619e33e940231
         int index = pair.first - 1; // Frequency of 1 goes to index 0
         std::copy(pair.second.begin(), pair.second.end(), std::back_inserter(columns[index]));
     }

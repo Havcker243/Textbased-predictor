@@ -1,7 +1,10 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+<<<<<<< HEAD
 #include <../nlohmann/json.hpp>
+=======
+>>>>>>> 3bcfb1ee762c5fce3b4bf21a291619e33e940231
 #include "WordReader.h"
 
 int main()
@@ -22,6 +25,10 @@ int main()
     }
     // Here we generate the frequency table
     wordReader.generateFrequencyTable();
+   // Ask if the user wants to export the frequency data
+    std::cout << "Do you want to export the frequency table to a CSV file? (yes/no): ";
+    std::string response;
+    std::cin >> response;
 
     // Ask if the user wants to export the frequency data and in which format
     std::cout << "Do you want to export the frequency table? Enter 'CSV' for CSV file, 'JSON' for JSON file, 'TXT' for text file, or 'NO' to skip: ";
